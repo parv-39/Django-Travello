@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ dest.name }} - Travello</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/destination_detail.css' %}">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="container d-flex justify-content-between align-items-center py-3">
+        <div class="logo"><a href="{% url 'index' %}">Travello</a></div>
+        <nav>
+            <ul class="d-flex list-unstyled mb-0">
+                <li class="px-3"><a href="{% url 'index' %}">Home</a></li>
+                <li class="px-3"><a href="{% url 'contactus' %}">Contact</a></li>
+                {% if user.is_authenticated %}
+                    <li class="px-3">Hello, {{ user.first_name }}</li>
+                    <li class="px-3"><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li class="px-3"><a href="{% url 'register' %}">Register</a></li>
+                    <li class="px-3"><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Destination Detail Container -->
+<div class="destination_detail_container container my-5">
+    <img src="{{ dest.img.url }}" alt="{{ dest.name }}">
+    
+    <h1 class="destination_detail_title">{{ dest.name }}</h1>
+    <p class="destination_detail_desc">{{ dest.desc }}</p>
+    
+    <div class="destination_detail_price">From ${{ dest.price }}</div>
+    
+    {% if dest.offer %}
+        <div class="mb-3">
+            <span class="badge bg-danger p-2">Special Offer</span>
+        </div>
+    {% endif %}
+    
+    <a href="{% url 'book_destination' dest.id %}" class="book_button btn btn-primary">Book Now</a>
+    
+    <a href="{% url 'index' %}" class="back_link">← Back to all destinations</a>
+</div>
+
+<!-- Footer -->
+<footer class="text-center py-4" style="background-color:#f8f9fa;">
+    &copy; <script>document.write(new Date().getFullYear());</script> Travello. All rights reserved.
+</footer>
+
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
+</body>
+</html>

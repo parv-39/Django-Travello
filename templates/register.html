@@ -1,0 +1,88 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
+    <script src="{% static 'main.js' %}"></script>
+</head>
+<body>
+    <form action="{% url 'register' %}" method="post">
+       {% csrf_token %} 
+        <input type = "text" name="first_name" placeholder="First Name"><br>
+        <input type = "text" name="last_name" placeholder="Last Name"><br>
+        <input type = "text" name="username" placeholder="username"><br>
+        <input type = "text" name="email" placeholder="email"><br>
+        <input type="password" name="password1" placeholder="Password">
+        <input type="password" name="password2" placeholder="Confirm Password">
+
+        <input type="submit">
+    </form>
+
+    <div>
+        {% for message in messages %}
+        <h3>{{message}}</h3>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
+
+{% comment %} {% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Create an Account</h2>
+
+        <!-- Django messages -->
+        {% if messages %}
+            <div class="msg-box">
+                {% for message in messages %}
+                    <p class="{{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <!-- Registration Form -->
+        <form action="{% url 'register' %}" method="POST">
+            {% csrf_token %}
+
+            <input type="text" name="first_name" placeholder="First Name" value="{{ request.POST.first_name }}">
+            <input type="text" name="last_name" placeholder="Last Name" value="{{ request.POST.last_name }}">
+            <input type="text" name="username" placeholder="Username" value="{{ request.POST.username }}">
+            <input type="email" name="email" placeholder="Email" value="{{ request.POST.email }}">
+            <input type="password" name="password1" placeholder="Password">
+            <input type="password" name="password2" placeholder="Confirm Password">
+
+            <button type="submit">Register</button>
+        </form>
+
+        <!-- Form validation errors -->
+        {% if form.errors %}
+            <div class="error-box">
+                {% for field, errors in form.errors.items %}
+                    <p>{{ field }}: {{ errors|striptags }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+    </div>
+
+</body>
+</html> {% endcomment %}
+
